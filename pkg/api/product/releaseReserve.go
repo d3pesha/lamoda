@@ -11,7 +11,7 @@ import (
 // @Accept		json
 // @Produce		json
 // @Tags		Product
-// @Param		ReleaseRequest	body	model.Reservation	true	"Release request"
+// @Param		ReleaseRequest	body	[]model.Reservation	true	"Release request"
 // @Success	200
 // @Failure	400	{product} 	errors.APIError
 // @Failure	500	{product} 	errors.APIError

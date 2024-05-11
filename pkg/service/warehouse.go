@@ -23,13 +23,13 @@ var (
 	WarehouseFoundError  = errors.InternalServer("WAREHOUSE_FOUND_ERROR", "warehouse found error")
 )
 
-func (uc WarehouseUseCase) Create(ctx context.Context, warehouse *model.Warehouse) (*model.Warehouse, error) {
-	warehouse, err := uc.repo.Create(ctx, warehouse)
+func (uc WarehouseUseCase) Create(ctx context.Context, warehouse *model.WarehouseCreateReq) (*model.Warehouse, error) {
+	response, err := uc.repo.Create(ctx, warehouse)
 	if err != nil {
 		return nil, WarehouseCreateError
 	}
 
-	return warehouse, nil
+	return response, nil
 }
 
 func (uc WarehouseUseCase) GetAll(ctx context.Context) ([]*model.Warehouse, error) {

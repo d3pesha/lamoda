@@ -30,38 +30,6 @@ func (Warehouse) TableName() string {
 	return "warehouses"
 }
 
-func (r warehouseRepo) Create(ctx context.Context, storage *model.Warehouse) (*model.Warehouse, error) {
-	var storageInfo Warehouse
-
-	storageInfo.Name = storage.Name
-	storageInfo.Available = storage.Available
-
-	result := r.data.Db.Create(&storageInfo)
-	if result.Error != nil {
-		return nil, result.Error
-	}
-
-	return storageInfo.modelToResponse(), nil
-}
-
-func (r warehouseRepo) Update(ctx context.Context, warehouse *model.Warehouse) (*model.Warehouse, error) {
-	var warehouseInfo Warehouse
-
-	warehouseInfo.Name = warehouse.Name
-	warehouseInfo.Available = warehouse.Available
-
-	result := r.data.Db.Updates(&warehouseInfo)
-	if result.Error != nil {
-		return nil, result.Error
-	}
-
-	return warehouseInfo.modelToResponse(), nil
-}
-
-func (r warehouseRepo) Delete(ctx context.Context, id uint32) error {
-	return r.data.Db.Model(&Warehouse{}).Delete(id).Error
-}
-
 func (w Warehouse) modelToResponse() *model.Warehouse {
 	dto := &model.Warehouse{
 		Id:        w.Id,
@@ -78,7 +46,39 @@ func (w Warehouse) modelToResponse() *model.Warehouse {
 	return dto
 }
 
-func (r warehouseRepo) GetAll(ctx context.Context) ([]*model.Warehouse, error) {
+func (r warehouseRepo) Create(_ context.Context, storage *model.WarehouseCreateReq) (*model.Warehouse, error) {
+	var storageInfo Warehouse
+
+	storageInfo.Name = storage.Name
+	storageInfo.Available = storage.Available
+
+	result := r.data.Db.Create(&storageInfo)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return storageInfo.modelToResponse(), nil
+}
+
+func (r warehouseRepo) Update(_ context.Context, warehouse *model.Warehouse) (*model.Warehouse, error) {
+	var warehouseInfo Warehouse
+
+	warehouseInfo.Name = warehouse.Name
+	warehouseInfo.Available = warehouse.Available
+
+	result := r.data.Db.Updates(&warehouseInfo)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return warehouseInfo.modelToResponse(), nil
+}
+
+func (r warehouseRepo) Delete(_ context.Context, id uint32) error {
+	return r.data.Db.Model(&Warehouse{}).Delete(id).Error
+}
+
+func (r warehouseRepo) GetAll(_ context.Context) ([]*model.Warehouse, error) {
 	var storages []*Warehouse
 
 	result := r.data.Db.Find(&storages)
@@ -94,7 +94,7 @@ func (r warehouseRepo) GetAll(ctx context.Context) ([]*model.Warehouse, error) {
 	return storageResponse, nil
 }
 
-func (r warehouseRepo) GetByID(ctx context.Context, id uint32) (*model.Warehouse, error) {
+func (r warehouseRepo) GetByID(_ context.Context, id uint32) (*model.Warehouse, error) {
 	var storage Warehouse
 
 	result := r.data.Db.First(&storage, id)

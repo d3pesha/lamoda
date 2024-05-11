@@ -24,17 +24,22 @@ type ProductWarehouse struct {
 }
 
 type Reservation struct {
-	Id          uint32 `json:"id,omitempty"`
+	Id          uint32 `json:"-"`
 	ProductID   uint32 `json:"product_id"`
 	Quantity    uint32 `json:"quantity"`
 	WarehouseID uint32 `json:"warehouse_id"`
 }
 
 type ProductCreateReq struct {
-	Id         uint32    `json:"id"`
 	Name       string    `json:"name"`
 	Code       string    `json:"code"`
 	Quantity   uint32    `json:"quantity"`
 	Size       uint16    `json:"size"`
 	Warehouses []*uint32 `json:"warehouse,omitempty"`
+}
+
+type WarehouseCreateReq struct {
+	Id        uint32 `json:"-"`
+	Name      string `json:"name"`
+	Available *bool  `json:"available"`
 }

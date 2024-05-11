@@ -101,7 +101,7 @@ func (r Reservation) modelToResponse() *model.Reservation {
 }
 
 // Создание продукта, если были переданы данные по складам, то создается запись в таблице product_warehouses
-func (r productRepo) Create(ctx context.Context, product *model.ProductCreateReq) (*model.Product, error) {
+func (r productRepo) Create(_ context.Context, product *model.ProductCreateReq) (*model.Product, error) {
 	var productInfo Product
 
 	productInfo.Name = product.Name
@@ -137,7 +137,7 @@ func (r productRepo) Create(ctx context.Context, product *model.ProductCreateReq
 }
 
 // получаем список существующих продуктов
-func (r productRepo) GetAll(ctx context.Context) ([]*model.Product, error) {
+func (r productRepo) GetAll(_ context.Context) ([]*model.Product, error) {
 	var products []Product
 
 	result := r.data.Db.Find(&products)
@@ -155,7 +155,7 @@ func (r productRepo) GetAll(ctx context.Context) ([]*model.Product, error) {
 }
 
 // получение продукта по id
-func (r productRepo) GetByID(ctx context.Context, id uint32) (*model.Product, error) {
+func (r productRepo) GetByID(_ context.Context, id uint32) (*model.Product, error) {
 	var product Product
 
 	result := r.data.Db.Where("id = ?", id).First(&product)
@@ -167,7 +167,7 @@ func (r productRepo) GetByID(ctx context.Context, id uint32) (*model.Product, er
 }
 
 // получаем доступные продукты на заданном складе, условия != 0 и склад доступен
-func (r productRepo) GetAvailableQuantity(ctx context.Context, warehouseID uint32) ([]*model.ProductWarehouse, error) {
+func (r productRepo) GetAvailableQuantity(_ context.Context, warehouseID uint32) ([]*model.ProductWarehouse, error) {
 	var products []ProductWarehouse
 
 	result := r.data.Db.Table("product_warehouses").
@@ -188,7 +188,7 @@ func (r productRepo) GetAvailableQuantity(ctx context.Context, warehouseID uint3
 }
 
 // Резерв товара,
-func (r productRepo) Reserve(ctx context.Context, reserve []model.Reservation) error {
+func (r productRepo) Reserve(_ context.Context, reserve []*model.Reservation) error {
 	tx := r.data.Db.Model(Reservation{}).Begin()
 	if tx.Error != nil {
 		return tx.Error
@@ -233,7 +233,7 @@ func (r productRepo) Reserve(ctx context.Context, reserve []model.Reservation) e
 	return nil
 }
 
-func (r productRepo) ReleaseReserve(ctx context.Context, reserve []*model.Reservation) error {
+func (r productRepo) ReleaseReserve(_ context.Context, reserve []*model.Reservation) error {
 	tx := r.data.Db.Begin()
 	if tx.Error != nil {
 		return tx.Error
@@ -303,6 +303,6 @@ func (r productRepo) GetReserve(_ context.Context, productID uint32, warehouseID
 	return reserve.modelToResponse(), nil
 }
 
-func (r productRepo) DeleteReserve(ctx context.Context, id uint32) error {
+func (r productRepo) DeleteReserve(_ context.Context, id uint32) error {
 	return r.data.Db.Delete(&Reservation{}, id).Error
 }

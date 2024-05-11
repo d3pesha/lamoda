@@ -12,7 +12,7 @@ import (
 // @Produce		json
 // @Tags		Product
 // @Param		warehouseID	path	int	true	"warehouse ID"
-// @Success	200 {array}  	model.Product "List of products"
+// @Success	200 {array}  	model.ProductWarehouse "List of products"
 // @Failure	400	{product} 	errors.APIError
 // @Failure	500	{product}	errors.APIError
 // @Router		/product/available/{id} [get]

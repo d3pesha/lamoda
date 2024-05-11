@@ -11,13 +11,13 @@ import (
 // @Accept		json
 // @Produce		json
 // @Tags		Warehouse
-// @Param		warehouse	body	model.Warehouse	true	"Warehouse"
+// @Param		warehouse	body	model.WarehouseCreateReq	true	"Warehouse"
 // @Success	201
 // @Failure	400	{warehouse} 	errors.APIError
 // @Failure	500	{warehouse} 	errors.APIError
 // @Router		/warehouse/ [post]
 func (r WarehouseRoute) Create(c *gin.Context) {
-	var warehouse model.Warehouse
+	var warehouse model.WarehouseCreateReq
 
 	if err := c.BindJSON(&warehouse); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

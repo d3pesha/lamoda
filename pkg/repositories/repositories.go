@@ -6,7 +6,7 @@ import (
 )
 
 type WarehouseRepo interface {
-	Create(context.Context, *model.Warehouse) (*model.Warehouse, error)
+	Create(context.Context, *model.WarehouseCreateReq) (*model.Warehouse, error)
 	GetAll(context.Context) ([]*model.Warehouse, error)
 	GetByID(context.Context, uint32) (*model.Warehouse, error)
 }
@@ -17,7 +17,7 @@ type ProductRepo interface {
 	GetByID(context.Context, uint32) (*model.Product, error)
 	GetAvailableQuantity(context.Context, uint32) ([]*model.ProductWarehouse, error)
 
-	Reserve(context.Context, []model.Reservation) error
+	Reserve(context.Context, []*model.Reservation) error
 	ReleaseReserve(context.Context, []*model.Reservation) error
 	DeleteReserve(context.Context, uint32) error
 	UpdateProductWarehouse(context.Context, model.ProductWarehouse) error

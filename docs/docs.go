@@ -63,13 +63,16 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Product"
+                            "$ref": "#/definitions/model.ProductCreateReq"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Product details",
+                        "schema": {
+                            "type": "product"
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
@@ -101,15 +104,21 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Storage ID",
-                        "name": "storageID",
+                        "description": "warehouse ID",
+                        "name": "warehouseID",
                         "in": "path",
                         "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "List of products",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.ProductWarehouse"
+                            }
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
@@ -145,7 +154,10 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.ReserveRequest"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Reservation"
+                            }
                         }
                     }
                 ],
@@ -179,15 +191,18 @@ const docTemplate = `{
                 "tags": [
                     "Product"
                 ],
-                "summary": "Reserve Product",
+                "summary": "Reservation Product",
                 "parameters": [
                     {
-                        "description": "Reserve request",
-                        "name": "ReserveRequest",
+                        "description": "Reservation request",
+                        "name": "Reservation",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.ReserveRequest"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Reservation"
+                            }
                         }
                     }
                 ],
@@ -262,16 +277,16 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Storage"
+                    "Warehouse"
                 ],
-                "summary": "List Storages",
+                "summary": "List Warehouses",
                 "responses": {
                     "200": {
-                        "description": "List of storages",
+                        "description": "List of warehouse",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.Storage"
+                                "$ref": "#/definitions/model.Warehouse"
                             }
                         }
                     },
@@ -291,17 +306,17 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Storage"
+                    "Warehouse"
                 ],
-                "summary": "Create Storage",
+                "summary": "Create Warehouse",
                 "parameters": [
                     {
-                        "description": "Storage",
+                        "description": "Warehouse",
                         "name": "warehouse",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Storage"
+                            "$ref": "#/definitions/model.WarehouseCreateReq"
                         }
                     }
                 ],
@@ -333,13 +348,13 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Storage"
+                    "Warehouse"
                 ],
-                "summary": "Get Storage by ID",
+                "summary": "Get Warehouse by ID",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Storage ID",
+                        "description": "Warehouse ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -347,7 +362,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Storage details",
+                        "description": "Warehouse details",
                         "schema": {
                             "type": "warehouse"
                         }
@@ -372,6 +387,9 @@ const docTemplate = `{
         "model.Product": {
             "type": "object",
             "properties": {
+                "code": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -383,13 +401,31 @@ const docTemplate = `{
                 },
                 "size": {
                     "type": "integer"
+                },
+                "warehouse": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ProductWarehouse"
+                    }
                 }
             }
         },
-        "model.ReserveRequest": {
+        "model.ProductCreateReq": {
             "type": "object",
             "properties": {
-                "product_ids": {
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "warehouse": {
                     "type": "array",
                     "items": {
                         "type": "integer"
@@ -397,7 +433,38 @@ const docTemplate = `{
                 }
             }
         },
-        "model.Storage": {
+        "model.ProductWarehouse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "product_id": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "warehouse_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.Reservation": {
+            "type": "object",
+            "properties": {
+                "product_id": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "warehouse_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.Warehouse": {
             "type": "object",
             "properties": {
                 "available": {
@@ -405,6 +472,23 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "products": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Product"
+                    }
+                }
+            }
+        },
+        "model.WarehouseCreateReq": {
+            "type": "object",
+            "properties": {
+                "available": {
+                    "type": "boolean"
                 },
                 "name": {
                     "type": "string"

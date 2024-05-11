@@ -11,13 +11,13 @@ import (
 // @Accept		json
 // @Produce		json
 // @Tags		Product
-// @Param		Reservation	body	model.Reservation	true	"Reservation request"
+// @Param		Reservation	body	[]model.Reservation	true	"Reservation request"
 // @Success	200
 // @Failure	400	{product} 	errors.APIError
 // @Failure	500	{product} 	errors.APIError
 // @Router		/product/reserve [post]
 func (r ProductRoute) ReserveProduct(c *gin.Context) {
-	var request []model.Reservation
+	var request []*model.Reservation
 	if err := c.BindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

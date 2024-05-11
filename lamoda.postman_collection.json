@@ -1,0 +1,458 @@
+{
+	"info": {
+		"_postman_id": "6fb8cae8-f49c-4766-8b20-bd8847fbe277",
+		"name": "lamoda Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30827725"
+	},
+	"item": [
+		{
+			"name": "create product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  \r\n    {\r\n    \"name\": \"Example product\",\r\n    \"code\": \"EP\",\r\n    \"quantity\": 10,\r\n    \"size\": 33,\r\n     \"warehouse\": [1,2]\r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "0.0.0.0:8000/product/create",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"product",
+						"create"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "8985",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reserve",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[   \r\n    {\r\n    \"warehouse_id\": 1,\r\n    \"product_id\": 1,\r\n    \"quantity\": 10\r\n    },\r\n    {\r\n    \"warehouse_id\": 2,\r\n    \"product_id\": 1,\r\n    \"quantity\": 5\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "0.0.0.0:8000/product/reserve",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"product",
+						"reserve"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "8985",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "release reserve",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[   \r\n    {\r\n    \"warehouse_id\": 1,\r\n    \"product_id\": 1,\r\n    \"quantity\": 2\r\n    },\r\n    {\r\n    \"warehouse_id\": 2,\r\n    \"product_id\": 1,\r\n    \"quantity\": 8\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "0.0.0.0:8000/product/release",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"product",
+						"release"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "8985",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "available by warehouse id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "0.0.0.0:8000/product/available/1",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"product",
+						"available",
+						"1"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "8985",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "0.0.0.0:8000/product/1",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"product",
+						"1"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "8985",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list products",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "0.0.0.0:8000/product/",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"product",
+						""
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "8985",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list warehouses",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "0.0.0.0:8000/warehouse/",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"warehouse",
+						""
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "8985",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "warehouse by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "0.0.0.0:8000/warehouse/1",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"warehouse",
+						"1"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "8985",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create warehouse",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  \r\n    {\r\n    \"name\": \"second warehouse\",\r\n    \"available\": true\r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "0.0.0.0:8000/warehouse/create",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"warehouse",
+						"create"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "8985",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

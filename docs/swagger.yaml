@@ -1,6 +1,8 @@
 definitions:
   model.Product:
     properties:
+      code:
+        type: string
       id:
         type: integer
       name:
@@ -9,20 +11,63 @@ definitions:
         type: integer
       size:
         type: integer
+      warehouse:
+        items:
+          $ref: '#/definitions/model.ProductWarehouse'
+        type: array
     type: object
-  model.ReserveRequest:
+  model.ProductCreateReq:
     properties:
-      product_ids:
+      code:
+        type: string
+      name:
+        type: string
+      quantity:
+        type: integer
+      size:
+        type: integer
+      warehouse:
         items:
           type: integer
         type: array
     type: object
-  model.Storage:
+  model.ProductWarehouse:
+    properties:
+      id:
+        type: integer
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+      warehouse_id:
+        type: integer
+    type: object
+  model.Reservation:
+    properties:
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+      warehouse_id:
+        type: integer
+    type: object
+  model.Warehouse:
     properties:
       available:
         type: boolean
       id:
         type: integer
+      name:
+        type: string
+      products:
+        items:
+          $ref: '#/definitions/model.Product'
+        type: array
+    type: object
+  model.WarehouseCreateReq:
+    properties:
+      available:
+        type: boolean
       name:
         type: string
     type: object
@@ -58,12 +103,14 @@ paths:
         name: Product
         required: true
         schema:
-          $ref: '#/definitions/model.Product'
+          $ref: '#/definitions/model.ProductCreateReq'
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: Product details
+          schema:
+            type: product
         "400":
           description: Bad Request
           schema:
@@ -108,16 +155,20 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: Storage ID
+      - description: warehouse ID
         in: path
-        name: storageID
+        name: warehouseID
         required: true
         type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: List of products
+          schema:
+            items:
+              $ref: '#/definitions/model.ProductWarehouse'
+            type: array
         "400":
           description: Bad Request
           schema:
@@ -139,7 +190,9 @@ paths:
         name: ReleaseRequest
         required: true
         schema:
-          $ref: '#/definitions/model.ReserveRequest'
+          items:
+            $ref: '#/definitions/model.Reservation'
+          type: array
       produces:
       - application/json
       responses:
@@ -161,12 +214,14 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: Reserve request
+      - description: Reservation request
         in: body
-        name: ReserveRequest
+        name: Reservation
         required: true
         schema:
-          $ref: '#/definitions/model.ReserveRequest'
+          items:
+            $ref: '#/definitions/model.Reservation'
+          type: array
       produces:
       - application/json
       responses:
@@ -180,10 +235,10 @@ paths:
           description: Internal Server Error
           schema:
             type: product
-      summary: Reserve Product
+      summary: Reservation Product
       tags:
       - Product
-  /storage/:
+  /warehouse/:
     get:
       consumes:
       - application/json
@@ -191,28 +246,28 @@ paths:
       - application/json
       responses:
         "200":
-          description: List of storages
+          description: List of warehouse
           schema:
             items:
-              $ref: '#/definitions/model.Storage'
+              $ref: '#/definitions/model.Warehouse'
             type: array
         "500":
           description: Internal Server Error
           schema:
             type: warehouse
-      summary: List Storages
+      summary: List Warehouses
       tags:
-      - Storage
+      - Warehouse
     post:
       consumes:
       - application/json
       parameters:
-      - description: Storage
+      - description: Warehouse
         in: body
         name: warehouse
         required: true
         schema:
-          $ref: '#/definitions/model.Storage'
+          $ref: '#/definitions/model.WarehouseCreateReq'
       produces:
       - application/json
       responses:
@@ -226,15 +281,15 @@ paths:
           description: Internal Server Error
           schema:
             type: warehouse
-      summary: Create Storage
+      summary: Create Warehouse
       tags:
-      - Storage
-  /storage/{id}:
+      - Warehouse
+  /warehouse/{id}:
     get:
       consumes:
       - application/json
       parameters:
-      - description: Storage ID
+      - description: Warehouse ID
         in: path
         name: id
         required: true
@@ -243,7 +298,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: Storage details
+          description: Warehouse details
           schema:
             type: warehouse
         "400":
@@ -254,7 +309,7 @@ paths:
           description: Internal Server Error
           schema:
             type: warehouse
-      summary: Get Storage by ID
+      summary: Get Warehouse by ID
       tags:
-      - Storage
+      - Warehouse
 swagger: "2.0"

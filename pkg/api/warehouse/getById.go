@@ -10,9 +10,9 @@ import (
 // @Summary		Get Warehouse by ID
 // @Accept		json
 // @Produce		json
-// @Tags		Warehouses
+// @Tags		Warehouse
 // @Param		id	path	int	true	"Warehouse ID"
-// @Success	200	{warehouse} model.Warehouse "Warehouse details"
+// @Success	200	{warehouse} 	model.Warehouse "Warehouse details"
 // @Failure	400	{warehouse} 	errors.APIError
 // @Failure	500	{warehouse} 	errors.APIError
 // @Router		/warehouse/{id} [get]

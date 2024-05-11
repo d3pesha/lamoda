@@ -11,7 +11,7 @@ import (
 // @Accept		json
 // @Produce		json
 // @Tags		Product
-// @Param		Product		body	model.Product	true	"Product"
+// @Param		Product		body	model.ProductCreateReq	true	"Product"
 // @Success	200 {product}  model.Product	"Product details"
 // @Failure	500	{product}	errors.APIError
 // @Failure	400	{product}	errors.APIError

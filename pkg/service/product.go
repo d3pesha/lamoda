@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"github.com/go-kratos/kratos/v2/errors"
 	log "github.com/sirupsen/logrus"
 	"lamoda/pkg/model"
@@ -57,7 +56,7 @@ func (uc ProductUseCase) GetAvailableProducts(ctx context.Context, warehouseID u
 	return products, nil
 }
 
-func (uc ProductUseCase) Reserve(ctx context.Context, reserve []model.Reservation) error {
+func (uc ProductUseCase) Reserve(ctx context.Context, reserve []*model.Reservation) error {
 	productIds := make([]uint32, len(reserve))
 	warehouseIds := make([]uint32, len(reserve))
 	reserveQuantity := make([]uint32, len(reserve))
@@ -74,10 +73,9 @@ func (uc ProductUseCase) Reserve(ctx context.Context, reserve []model.Reservatio
 		return ProductFoundError
 	}
 
-	reservations := make([]model.Reservation, len(reserve))
+	reservations := make([]*model.Reservation, len(reserve))
 
 	for i, product := range products {
-		fmt.Println(product.Quantity, " ", reserveQuantity[i])
 		// Проверяем чтобы количество запрошенного товара не превышало остаток на складе
 		if product.Quantity < reserveQuantity[i] {
 			return ReserveQuantityError
@@ -89,10 +87,8 @@ func (uc ProductUseCase) Reserve(ctx context.Context, reserve []model.Reservatio
 		updateProduct.Quantity = product.Quantity - reserveQuantity[i]
 
 		// проверяем наличие записи резерва
-		existReserve, err := uc.repo.GetReserve(ctx, product.ProductID, product.WarehouseID)
-		if err != nil {
-			return ReserveFoundError
-		}
+		existReserve, _ := uc.repo.GetReserve(ctx, product.ProductID, product.WarehouseID)
+
 		if existReserve != nil {
 			// если запись есть, то обновляем данные
 			reserveQuantity[i] += existReserve.Quantity
@@ -105,13 +101,16 @@ func (uc ProductUseCase) Reserve(ctx context.Context, reserve []model.Reservatio
 		}
 
 		newReservation := &model.Reservation{
-			Id:          existReserve.Id,
 			ProductID:   product.ProductID,
 			Quantity:    reserveQuantity[i],
 			WarehouseID: product.WarehouseID,
 		}
 
-		reservations[i] = *newReservation
+		if existReserve != nil {
+			newReservation.Id = existReserve.Id
+		}
+
+		reservations[i] = newReservation
 	}
 
 	err = uc.repo.Reserve(ctx, reservations)
