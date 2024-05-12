@@ -8,15 +8,6 @@ import (
 	"strconv"
 )
 
-// @Summary		Get Available Quantity
-// @Accept		json
-// @Produce		json
-// @Tags		Product
-// @Param		warehouseID	path	int	true	"warehouse ID"
-// @Success	200 {array}  	model.ProductWarehouse "List of products"
-// @Failure	400	{product} 	errors.APIError
-// @Failure	500	{product}	errors.APIError
-// @Router		/product/available/{id} [get]
 func (r ProductRoute) GetAvailableProducts(c *gin.Context) {
 	warehouseID := c.Param("id")
 

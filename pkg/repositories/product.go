@@ -63,18 +63,6 @@ func (p Product) modelToResponse() *model.Product {
 		Size:     p.Size,
 	}
 
-	//if p.Warehouses != nil {
-	//	for _, w := range p.Warehouses {
-	//		warehouse := &model.ProductWarehouse{
-	//			ID:          w.ID,
-	//			WarehouseID: w.WarehouseID,
-	//			ProductID:   w.ProductID,
-	//			Quantity:    w.Quantity,
-	//		}
-	//		dto.Warehouses = append(dto.Warehouses, warehouse)
-	//	}
-	//}
-
 	return dto
 }
 

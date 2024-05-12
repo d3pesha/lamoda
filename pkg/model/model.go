@@ -30,7 +30,6 @@ type Reservation struct {
 }
 
 type ReservationReq struct {
-	Id   uint32         `jsonapi:"primary,reserve"`
 	Data []*Reservation `jsonapi:"relation,reservation"`
 }
 

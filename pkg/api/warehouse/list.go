@@ -7,13 +7,6 @@ import (
 	"net/http"
 )
 
-// @Summary		List Warehouses
-// @Accept		json
-// @Produce		json
-// @Tags		Warehouse
-// @Success	200	{array} model.Warehouse "List of warehouse"
-// @Failure	500	{warehouse} 	errors.APIError
-// @Router		/warehouse/ [get]
 func (r WarehouseRoute) ListWarehouse(c *gin.Context) {
 	response, err := r.uc.GetAll(c)
 	if err != nil {

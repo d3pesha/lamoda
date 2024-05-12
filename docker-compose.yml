@@ -30,7 +30,9 @@ services:
         condition: service_healthy
 
   lamoda:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: lamoda
     restart: always
     ports:

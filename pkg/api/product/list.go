@@ -7,13 +7,6 @@ import (
 	"net/http"
 )
 
-// @Summary		List Products
-// @Accept		json
-// @Produce		json
-// @Tags		Product
-// @Success	200	{array}  	model.Product "List of products"
-// @Failure	500	{product} 	errors.APIError
-// @Router		/product/ [get]
 func (r ProductRoute) ListProducts(c *gin.Context) {
 	response, err := r.uc.GetAll(c.Request.Context())
 	if err != nil {

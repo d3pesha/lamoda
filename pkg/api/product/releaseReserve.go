@@ -8,15 +8,6 @@ import (
 	"net/http"
 )
 
-// @Summary		Release Reserved Products
-// @Accept		json
-// @Produce		json
-// @Tags		Product
-// @Param		ReleaseRequest	body	[]model.Reservation	true	"Release request"
-// @Success	200
-// @Failure	400	{product} 	errors.APIError
-// @Failure	500	{product} 	errors.APIError
-// @Router		/product/release [post]
 func (r ProductRoute) ReleaseReservedProducts(c *gin.Context) {
 	reservations := &model.ReservationReq{}
 

@@ -6,10 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 	"lamoda/configs"
-	_ "lamoda/docs"
 	"lamoda/pkg/api/product"
 	"lamoda/pkg/api/warehouse"
 	"lamoda/pkg/data"
@@ -54,8 +51,6 @@ func main() {
 	productRoute := product.NewProductRoute(*productUseCase)
 
 	router := gin.Default()
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
 	storageRoute.Register(router)
 	productRoute.Register(router)
 

@@ -8,15 +8,6 @@ import (
 	"net/http"
 )
 
-// @Summary		Create Warehouse
-// @Accept		json
-// @Produce		json
-// @Tags		Warehouse
-// @Param		warehouse	body	model.WarehouseCreateReq	true	"Warehouse"
-// @Success	201
-// @Failure	400	{warehouse} 	errors.APIError
-// @Failure	500	{warehouse} 	errors.APIError
-// @Router		/warehouse/ [post]
 func (r WarehouseRoute) Create(c *gin.Context) {
 	warehouse := &model.WarehouseCreateReq{}
 

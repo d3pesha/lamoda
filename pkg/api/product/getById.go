@@ -8,15 +8,6 @@ import (
 	"strconv"
 )
 
-// @Summary		Get Product by ID
-// @Accept		json
-// @Produce		json
-// @Tags		Product
-// @Param		id	path	int	true		"Product ID"
-// @Success	200	{product}	model.Product	"Product details"
-// @Failure	400	{product} 	errors.APIError
-// @Failure	500	{product} 	errors.APIError
-// @Router		/product/{id} [get]
 func (r ProductRoute) GetById(c *gin.Context) {
 	productID := c.Param("id")
 

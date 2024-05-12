@@ -8,15 +8,6 @@ import (
 	"net/http"
 )
 
-// @Summary		Create
-// @Accept		json
-// @Produce		json
-// @Tags		Product
-// @Param		Product		body	model.ProductCreateReq	true	"Product"
-// @Success	200 {product}  model.Product	"Product details"
-// @Failure	500	{product}	errors.APIError
-// @Failure	400	{product}	errors.APIError
-// @Router		/product/ [post]
 func (r ProductRoute) Create(c *gin.Context) {
 	product := &model.ProductCreateReq{}
 
