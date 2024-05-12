@@ -81,10 +81,11 @@ func (uc ProductUseCase) Reserve(ctx context.Context, reserve []*model.Reservati
 			return ReserveQuantityError
 		}
 
-		var updateProduct model.ProductWarehouse
-		updateProduct.ProductID = product.ProductID
-		updateProduct.WarehouseID = product.WarehouseID
-		updateProduct.Quantity = product.Quantity - reserveQuantity[i]
+		updateProduct := model.ProductWarehouse{
+			ProductID:   product.ProductID,
+			Quantity:    product.Quantity - reserveQuantity[i],
+			WarehouseID: product.WarehouseID,
+		}
 
 		// проверяем наличие записи резерва
 		existReserve, _ := uc.repo.GetReserve(ctx, product.ProductID, product.WarehouseID)
@@ -106,6 +107,7 @@ func (uc ProductUseCase) Reserve(ctx context.Context, reserve []*model.Reservati
 			WarehouseID: product.WarehouseID,
 		}
 
+		// ставим id резерва для обновления существующего резерва
 		if existReserve != nil {
 			newReservation.Id = existReserve.Id
 		}

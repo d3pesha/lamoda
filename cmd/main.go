@@ -61,7 +61,6 @@ func main() {
 
 	err = router.Run("0.0.0.0:8000")
 	if err != nil {
-		return
+		log.Fatalf("Failed to start server: %v", err)
 	}
-
 }

@@ -119,7 +119,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[   \r\n    {\r\n    \"warehouse_id\": 1,\r\n    \"product_id\": 1,\r\n    \"quantity\": 2\r\n    },\r\n    {\r\n    \"warehouse_id\": 2,\r\n    \"product_id\": 1,\r\n    \"quantity\": 8\r\n    }\r\n]",
+					"raw": "[   \r\n    {\r\n    \"warehouse_id\": 1,\r\n    \"product_id\": 1,\r\n    \"quantity\": 2\r\n    },\r\n    {\r\n    \"warehouse_id\": 2,\r\n    \"product_id\": 2,\r\n    \"quantity\": 8\r\n    }\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"

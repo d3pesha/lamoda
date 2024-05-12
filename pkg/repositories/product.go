@@ -102,14 +102,25 @@ func (r Reservation) modelToResponse() *model.Reservation {
 
 // Создание продукта, если были переданы данные по складам, то создается запись в таблице product_warehouses
 func (r productRepo) Create(_ context.Context, product *model.ProductCreateReq) (*model.Product, error) {
-	var productInfo Product
+	tx := r.data.Db.Begin()
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
 
-	productInfo.Name = product.Name
-	productInfo.Quantity = product.Quantity
-	productInfo.Size = product.Size
-	productInfo.Code = product.Code
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
 
-	result := r.data.Db.Create(&productInfo)
+	productInfo := &Product{
+		Name:     product.Name,
+		Code:     product.Code,
+		Quantity: product.Quantity,
+		Size:     product.Size,
+	}
+
+	result := tx.Model(&Product{}).Create(&productInfo)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -127,10 +138,15 @@ func (r productRepo) Create(_ context.Context, product *model.ProductCreateReq) 
 			productInfo.Warehouses = append(productInfo.Warehouses, warehouse)
 		}
 
-		result = r.data.Db.Create(&warehouses)
+		result = tx.Model(&ProductWarehouse{}).Create(&warehouses)
 		if result.Error != nil {
 			return nil, result.Error
 		}
+	}
+
+	if err := tx.Commit().Error; err != nil {
+		tx.Rollback()
+		return nil, err
 	}
 
 	return productInfo.modelToResponse(), nil
@@ -187,7 +203,7 @@ func (r productRepo) GetAvailableQuantity(_ context.Context, warehouseID uint32)
 	return response, nil
 }
 
-// Резерв товара,
+// Резерв товара
 func (r productRepo) Reserve(_ context.Context, reserve []*model.Reservation) error {
 	tx := r.data.Db.Model(Reservation{}).Begin()
 	if tx.Error != nil {
@@ -201,12 +217,12 @@ func (r productRepo) Reserve(_ context.Context, reserve []*model.Reservation) er
 	}()
 
 	for _, res := range reserve {
-
-		var reserveInfo Reservation
-		reserveInfo.Id = res.Id
-		reserveInfo.Quantity = res.Quantity
-		reserveInfo.ProductID = res.ProductID
-		reserveInfo.WarehouseID = res.WarehouseID
+		reserveInfo := &Reservation{
+			Id:          res.Id,
+			WarehouseID: res.WarehouseID,
+			ProductID:   res.ProductID,
+			Quantity:    res.Quantity,
+		}
 
 		// Если запись о резерве есть, то обновляем количество зарезервированного товара
 		if reserveInfo.Id != 0 {
@@ -283,9 +299,25 @@ func (r productRepo) GetProductAndWarehouse(_ context.Context, productID []uint3
 }
 
 func (r productRepo) UpdateProductWarehouse(_ context.Context, warehouse model.ProductWarehouse) error {
-	err := r.data.Db.Model(&ProductWarehouse{}).Where("product_id = ? AND warehouse_id = ?", warehouse.ProductID, warehouse.WarehouseID).
+	tx := r.data.Db.Begin()
+	if tx.Error != nil {
+		return tx.Error
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	err := tx.Model(&ProductWarehouse{}).Where("product_id = ? AND warehouse_id = ?", warehouse.ProductID, warehouse.WarehouseID).
 		Update("quantity", warehouse.Quantity).Error
 	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	if err := tx.Commit().Error; err != nil {
+		tx.Rollback()
 		return err
 	}
 

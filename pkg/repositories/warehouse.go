@@ -46,29 +46,59 @@ func (w Warehouse) modelToResponse() *model.Warehouse {
 	return dto
 }
 
-func (r warehouseRepo) Create(_ context.Context, storage *model.WarehouseCreateReq) (*model.Warehouse, error) {
-	var storageInfo Warehouse
+func (r warehouseRepo) Create(_ context.Context, warehouse *model.WarehouseCreateReq) (*model.Warehouse, error) {
+	tx := r.data.Db.Begin()
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
 
-	storageInfo.Name = storage.Name
-	storageInfo.Available = storage.Available
+	warehouseInfo := &Warehouse{
+		Name:      warehouse.Name,
+		Available: warehouse.Available,
+	}
 
-	result := r.data.Db.Create(&storageInfo)
+	result := tx.Create(&warehouseInfo)
 	if result.Error != nil {
 		return nil, result.Error
 	}
 
-	return storageInfo.modelToResponse(), nil
+	if err := tx.Commit().Error; err != nil {
+		tx.Rollback()
+		return nil, err
+	}
+	return warehouseInfo.modelToResponse(), nil
 }
 
 func (r warehouseRepo) Update(_ context.Context, warehouse *model.Warehouse) (*model.Warehouse, error) {
-	var warehouseInfo Warehouse
+	tx := r.data.Db.Begin()
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
 
-	warehouseInfo.Name = warehouse.Name
-	warehouseInfo.Available = warehouse.Available
+	warehouseInfo := &Warehouse{
+		Name:      warehouse.Name,
+		Available: warehouse.Available,
+	}
 
-	result := r.data.Db.Updates(&warehouseInfo)
+	result := tx.Updates(&warehouseInfo)
 	if result.Error != nil {
+		tx.Rollback()
 		return nil, result.Error
+	}
+
+	if err := tx.Commit().Error; err != nil {
+		tx.Rollback()
+		return nil, err
 	}
 
 	return warehouseInfo.modelToResponse(), nil
