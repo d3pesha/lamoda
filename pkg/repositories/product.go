@@ -316,7 +316,7 @@ func (r productRepo) UpdateProductWarehouse(_ context.Context, warehouse model.P
 		return err
 	}
 
-	if err := tx.Commit().Error; err != nil {
+	if err = tx.Commit().Error; err != nil {
 		tx.Rollback()
 		return err
 	}
