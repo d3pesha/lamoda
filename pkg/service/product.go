@@ -109,7 +109,7 @@ func (uc ProductUseCase) Reserve(ctx context.Context, reserve []*model.Reservati
 
 		// ставим id резерва для обновления существующего резерва
 		if existReserve != nil {
-			newReservation.Id = existReserve.Id
+			newReservation.ID = existReserve.ID
 		}
 
 		reservations[i] = newReservation
@@ -141,7 +141,7 @@ func (uc ProductUseCase) ReleaseReserve(ctx context.Context, reserve []*model.Re
 
 		// если количество товара в резерве совпадает с количеством заявленного для выпуска, то удаляем запись о резерве
 		if existReserve.Quantity == r.Quantity {
-			err = uc.repo.DeleteReserve(ctx, existReserve.Id)
+			err = uc.repo.DeleteReserve(ctx, existReserve.ID)
 			if err != nil {
 				return ReserveDeleteError
 			}
@@ -185,4 +185,8 @@ func (uc ProductUseCase) GetProductAndWarehouse(ctx context.Context, productID [
 	}
 
 	return productWarehouses, nil
+}
+
+func (uc ProductUseCase) GetReserve(ctx context.Context, productID uint32, warehouseID uint32) (*model.Reservation, error) {
+	return uc.repo.GetReserve(ctx, productID, warehouseID)
 }

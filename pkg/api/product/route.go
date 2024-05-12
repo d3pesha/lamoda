@@ -23,7 +23,7 @@ func (r ProductRoute) Register(router *gin.Engine) {
 		product.POST("/release", r.ReleaseReservedProducts)
 
 		product.GET("/:id", r.GetById)
-		product.GET("/", r.ListClients)
+		product.GET("/", r.ListProducts)
 		product.GET("/available/:id", r.GetAvailableProducts)
 	}
 

@@ -20,7 +20,7 @@ func NewProductRepo(data *data.Data, logger *log.Logger) ProductRepo {
 }
 
 type Product struct {
-	Id         uint32              `gorm:"column:id"`
+	ID         uint32              `gorm:"column:id"`
 	Name       string              `gorm:"column:name"`
 	Code       string              `gorm:"column:code"`
 	Quantity   uint32              `gorm:"column:quantity"`
@@ -29,14 +29,14 @@ type Product struct {
 }
 
 type ProductWarehouse struct {
-	Id          uint32 `gorm:"column:id"`
+	ID          uint32 `gorm:"column:id"`
 	WarehouseID uint32 `gorm:"column:warehouse_id"`
 	ProductID   uint32 `gorm:"column:product_id"`
 	Quantity    uint32 `gorm:"column:quantity"`
 }
 
 type Reservation struct {
-	Id          uint32 `gorm:"column:id"`
+	ID          uint32 `gorm:"column:id"`
 	WarehouseID uint32 `gorm:"column:warehouse_id"`
 	ProductID   uint32 `gorm:"column:product_id"`
 	Quantity    uint32 `gorm:"column:quantity"`
@@ -56,31 +56,31 @@ func (Reservation) TableName() string {
 
 func (p Product) modelToResponse() *model.Product {
 	dto := &model.Product{
-		Id:       p.Id,
+		ID:       p.ID,
 		Name:     p.Name,
 		Code:     p.Code,
 		Quantity: p.Quantity,
 		Size:     p.Size,
 	}
 
-	if p.Warehouses != nil {
-		for _, w := range p.Warehouses {
-			warehouse := &model.ProductWarehouse{
-				Id:          w.Id,
-				WarehouseID: w.WarehouseID,
-				ProductID:   w.ProductID,
-				Quantity:    w.Quantity,
-			}
-			dto.Warehouses = append(dto.Warehouses, warehouse)
-		}
-	}
+	//if p.Warehouses != nil {
+	//	for _, w := range p.Warehouses {
+	//		warehouse := &model.ProductWarehouse{
+	//			ID:          w.ID,
+	//			WarehouseID: w.WarehouseID,
+	//			ProductID:   w.ProductID,
+	//			Quantity:    w.Quantity,
+	//		}
+	//		dto.Warehouses = append(dto.Warehouses, warehouse)
+	//	}
+	//}
 
 	return dto
 }
 
 func (r ProductWarehouse) modelToResponse() *model.ProductWarehouse {
 	dto := &model.ProductWarehouse{
-		Id:          r.Id,
+		ID:          r.ID,
 		WarehouseID: r.WarehouseID,
 		ProductID:   r.ProductID,
 		Quantity:    r.Quantity,
@@ -91,7 +91,7 @@ func (r ProductWarehouse) modelToResponse() *model.ProductWarehouse {
 
 func (r Reservation) modelToResponse() *model.Reservation {
 	dto := &model.Reservation{
-		Id:          r.Id,
+		ID:          r.ID,
 		WarehouseID: r.WarehouseID,
 		ProductID:   r.ProductID,
 		Quantity:    r.Quantity,
@@ -125,17 +125,18 @@ func (r productRepo) Create(_ context.Context, product *model.ProductCreateReq) 
 		return nil, result.Error
 	}
 
-	if product.Warehouses != nil {
+	if product.Warehouses != nil && len(product.Warehouses) > 0 {
 		warehouses := make([]*ProductWarehouse, 0)
 
-		for _, id := range product.Warehouses {
-			warehouse := &ProductWarehouse{
-				WarehouseID: *id,
-				ProductID:   productInfo.Id,
+		for _, w := range product.Warehouses {
+			warehouse := ProductWarehouse{
+				WarehouseID: w.ID,
+				ProductID:   productInfo.ID,
 				Quantity:    productInfo.Quantity,
 			}
-			warehouses = append(warehouses, warehouse)
-			productInfo.Warehouses = append(productInfo.Warehouses, warehouse)
+
+			warehouses = append(warehouses, &warehouse)
+			productInfo.Warehouses = append(productInfo.Warehouses, &warehouse)
 		}
 
 		result = tx.Model(&ProductWarehouse{}).Create(&warehouses)
@@ -218,15 +219,15 @@ func (r productRepo) Reserve(_ context.Context, reserve []*model.Reservation) er
 
 	for _, res := range reserve {
 		reserveInfo := &Reservation{
-			Id:          res.Id,
+			ID:          res.ID,
 			WarehouseID: res.WarehouseID,
 			ProductID:   res.ProductID,
 			Quantity:    res.Quantity,
 		}
 
 		// Если запись о резерве есть, то обновляем количество зарезервированного товара
-		if reserveInfo.Id != 0 {
-			if err := tx.Where("id = ?", reserveInfo.Id).
+		if reserveInfo.ID != 0 {
+			if err := tx.Where("id = ?", reserveInfo.ID).
 				Update("quantity", &reserveInfo.Quantity).Error; err != nil {
 				tx.Rollback()
 				return err

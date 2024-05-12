@@ -2,6 +2,7 @@ package product
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/google/jsonapi"
 	"lamoda/pkg/api/errors"
 	"net/http"
 	"strconv"
@@ -25,12 +26,17 @@ func (r ProductRoute) GetAvailableProducts(c *gin.Context) {
 		return
 	}
 
-	quantity, err := r.uc.GetAvailableProducts(c, uint32(id))
+	response, err := r.uc.GetAvailableProducts(c.Request.Context(), uint32(id))
 	if err != nil {
 		aerr := errors.DefaultErrorDecoder(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": aerr})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"products": quantity})
+	c.Writer.Header().Set("Content-Type", jsonapi.MediaType)
+	c.Writer.WriteHeader(http.StatusOK)
+
+	if err = jsonapi.MarshalPayload(c.Writer, response); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error marshalling JSON API response"})
+	}
 }

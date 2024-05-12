@@ -1,45 +1,50 @@
 package model
 
 type Warehouse struct {
-	Id        uint32     `json:"id,omitempty"`
-	Name      string     `json:"name"`
-	Available *bool      `json:"available"`
-	Products  []*Product `json:"products,omitempty"`
+	ID        uint32     `jsonapi:"primary,warehouse"`
+	Name      string     `jsonapi:"attr,name"`
+	Available *bool      `jsonapi:"attr,available"`
+	Products  []*Product `jsonapi:"relation,product,omitempty"`
 }
 
 type Product struct {
-	Id         uint32              `json:"id,omitempty"`
-	Name       string              `json:"name"`
-	Code       string              `json:"code"`
-	Quantity   uint32              `json:"quantity"`
-	Size       uint16              `json:"size"`
-	Warehouses []*ProductWarehouse `json:"warehouse,omitempty"`
+	ID       uint32 `jsonapi:"primary,product"`
+	Name     string `jsonapi:"attr,name"`
+	Code     string `jsonapi:"attr,code"`
+	Quantity uint32 `jsonapi:"attr,quantity"`
+	Size     uint16 `jsonapi:"attr,size"`
 }
 
 type ProductWarehouse struct {
-	Id          uint32 `json:"id,omitempty"`
-	ProductID   uint32 `json:"product_id"`
-	Quantity    uint32 `json:"quantity"`
-	WarehouseID uint32 `json:"warehouse_id"`
+	ID          uint32 `jsonapi:"primary,product_warehouse"`
+	ProductID   uint32 `jsonapi:"attr,product_id"`
+	Quantity    uint32 `jsonapi:"attr,quantity"`
+	WarehouseID uint32 `jsonapi:"attr,warehouse_id"`
 }
 
 type Reservation struct {
-	Id          uint32 `json:"-"`
-	ProductID   uint32 `json:"product_id"`
-	Quantity    uint32 `json:"quantity"`
-	WarehouseID uint32 `json:"warehouse_id"`
+	ID          uint32 `jsonapi:"primary,reservation"`
+	ProductID   uint32 `jsonapi:"attr,product_id"`
+	Quantity    uint32 `jsonapi:"attr,quantity"`
+	WarehouseID uint32 `jsonapi:"attr,warehouse_id"`
+}
+
+type ReservationReq struct {
+	Id   uint32         `jsonapi:"primary,reserve"`
+	Data []*Reservation `jsonapi:"relation,reservation"`
 }
 
 type ProductCreateReq struct {
-	Name       string    `json:"name"`
-	Code       string    `json:"code"`
-	Quantity   uint32    `json:"quantity"`
-	Size       uint16    `json:"size"`
-	Warehouses []*uint32 `json:"warehouse,omitempty"`
+	ID         uint32       `jsonapi:"primary,product"`
+	Name       string       `jsonapi:"attr,name"`
+	Code       string       `jsonapi:"attr,code"`
+	Quantity   uint32       `jsonapi:"attr,quantity"`
+	Size       uint16       `jsonapi:"attr,size"`
+	Warehouses []*Warehouse `jsonapi:"relation,warehouse,omitempty"`
 }
 
 type WarehouseCreateReq struct {
-	Id        uint32 `json:"-"`
-	Name      string `json:"name"`
-	Available *bool  `json:"available"`
+	ID        uint32 `jsonapi:"primary,warehouse"`
+	Name      string `jsonapi:"attr,name"`
+	Available *bool  `jsonapi:"attr,available"`
 }

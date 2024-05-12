@@ -20,7 +20,7 @@ func NewStorageRepo(data *data.Data, logger *log.Logger) WarehouseRepo {
 }
 
 type Warehouse struct {
-	Id        uint32    `gorm:"column:id"`
+	ID        uint32    `gorm:"column:id"`
 	Name      string    `gorm:"column:name"`
 	Available *bool     `gorm:"column:available"`
 	Products  []Product `gorm:"many2many:product_warehouses;"`
@@ -32,7 +32,7 @@ func (Warehouse) TableName() string {
 
 func (w Warehouse) modelToResponse() *model.Warehouse {
 	dto := &model.Warehouse{
-		Id:        w.Id,
+		ID:        w.ID,
 		Name:      w.Name,
 		Available: w.Available,
 	}
