@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "f843f1df-f990-4c19-94aa-0ff7c6592e7f",
-		"name": "lamoda Copy",
+		"name": "lamoda",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30827725"
 	},
@@ -10,14 +10,7 @@
 			"name": "create product",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "POST",
 				"header": [],
@@ -42,15 +35,9 @@
 					"path": [
 						"product",
 						"create"
-					],
-					"query": [
-						{
-							"key": null,
-							"value": "8985",
-							"disabled": true
-						}
 					]
-				}
+				},
+				"description": "### Create Product\n\nСоздание товара, если указывать id складов, то товар будет создан также в связующих складах в количестве quantity\n\n#### Response\n\nThe response of this request is a JSON schema describing the structure of the response data."
 			},
 			"response": []
 		},
@@ -58,14 +45,7 @@
 			"name": "reserve",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "POST",
 				"header": [],
@@ -90,15 +70,9 @@
 					"path": [
 						"product",
 						"reserve"
-					],
-					"query": [
-						{
-							"key": null,
-							"value": "8985",
-							"disabled": true
-						}
 					]
-				}
+				},
+				"description": "### Request Description\n\nРезерв товара, если в указанном складе нет товара, то выйдет ошибка поиска товара.\n\nЕсли запись о резерве существует, то количество зарезервированного товара на складе обновится, в случае отсутствия создается новая запись.\n\n### Response\n\n``` json\n{\n  \"Succsess\": true,\n}\n\n ```"
 			},
 			"response": []
 		},
@@ -106,14 +80,7 @@
 			"name": "release reserve",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "POST",
 				"header": [],
@@ -138,15 +105,9 @@
 					"path": [
 						"product",
 						"release"
-					],
-					"query": [
-						{
-							"key": null,
-							"value": "8985",
-							"disabled": true
-						}
 					]
-				}
+				},
+				"description": "### POST /product/release\n\nВыпуск резерва, если записи о резерве по указанному товару и складу, возвращается ошибка поиска.\n\nЕсли запись резерва найдена и количество выпуска = количеству резерва, то запись о резерве удаляется, в ином случае уменьшается количество зарезервированного товара.\n\n#### Response:\n\n``` json\n{\n  \"Succsess\": true,\n}\n\n ```"
 			},
 			"response": []
 		},
@@ -157,14 +118,7 @@
 			},
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
@@ -190,15 +144,9 @@
 						"product",
 						"available",
 						"1"
-					],
-					"query": [
-						{
-							"key": null,
-							"value": "8985",
-							"disabled": true
-						}
 					]
-				}
+				},
+				"description": "## GET /product/:id\n\nПолучение доступного товара на складе по ID.\n\nУсловия для получения товара:  \n1\\. Склад доступен  \n2\\. Количество товара > 0\n\n### Response\n\n``` json\n{\n    \"data\": [\n        {\n            \"type\": \"product_warehouse\",\n            \"id\": int,\n            \"attributes\": {\n                \"product_id\": int,\n                \"quantity\": int,\n                \"warehouse_id\": int\n            }\n        },\n        {\n            \"type\": \"product_warehouse\",\n            \"id\": int,\n            \"attributes\": {\n                \"product_id\": int,\n                \"quantity\": int,\n                \"warehouse_id\": int\n            }\n        }\n    ]\n}\n\n ```"
 			},
 			"response": []
 		},
@@ -209,14 +157,7 @@
 			},
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
@@ -241,15 +182,9 @@
 					"path": [
 						"product",
 						"1"
-					],
-					"query": [
-						{
-							"key": null,
-							"value": "8985",
-							"disabled": true
-						}
 					]
-				}
+				},
+				"description": "### GET /product/1\n\nПолучение информации по ID товара\n\n#### Response\n\n``` json\n{\n    \"data\": {\n        \"type\": \"product\",\n        \"id\": \"1\",\n        \"attributes\": {\n            \"code\": \"string\",\n            \"name\": \"string\",\n            \"quantity\": int,\n            \"size\": int\n        }\n    }\n}\n\n ```"
 			},
 			"response": []
 		},
@@ -260,14 +195,7 @@
 			},
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
@@ -292,15 +220,9 @@
 					"path": [
 						"product",
 						""
-					],
-					"query": [
-						{
-							"key": null,
-							"value": "8985",
-							"disabled": true
-						}
 					]
-				}
+				},
+				"description": "### GET /product/\n\nВозвращает список зарегистрированных продуктов.\n\n## Response:\n\n``` json\n{\n    \"data\": [\n        {\n            \"type\": \"product\",\n            \"id\": \"1\",\n            \"attributes\": {\n                \"code\": \"string\",\n                \"name\": \"string\",\n                \"quantity\": int,\n                \"size\": int\n            }\n        },\n        {\n            \"type\": \"product\",\n            \"id\": \"2\",\n            \"attributes\": {\n                \"code\": \"string\",\n                \"name\": \"string\",\n                \"quantity\": int,\n                \"size\": int\n            }\n        }\n    ]\n}\n\n ```"
 			},
 			"response": []
 		},
@@ -311,14 +233,7 @@
 			},
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
@@ -343,15 +258,9 @@
 					"path": [
 						"warehouse",
 						""
-					],
-					"query": [
-						{
-							"key": null,
-							"value": "8985",
-							"disabled": true
-						}
 					]
-				}
+				},
+				"description": "### GET /warehouse/\n\nВозвращает список зарегистрированных складов.\n\n## Response:\n\n``` json\n{\n    \"data\": [\n        {\n            \"type\": \"warehouse\",\n            \"id\": \"1\",\n            \"attributes\": {\n                \"available\": true,\n                \"name\": \"Main Warehouse\"\n            }\n        },\n\n        {\n            \"type\": \"warehouse\",\n            \"id\": \"2\",\n            \"attributes\": {\n                \"available\": false,\n                \"name\": \"Online Warehouse\"\n            }\n        }\n    ]\n}\n\n ```"
 			},
 			"response": []
 		},
@@ -362,14 +271,7 @@
 			},
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
@@ -394,15 +296,9 @@
 					"path": [
 						"warehouse",
 						"1"
-					],
-					"query": [
-						{
-							"key": null,
-							"value": "8985",
-							"disabled": true
-						}
 					]
-				}
+				},
+				"description": "### GET /warehouse/:id\n\nВозвращает зарегистрированный склад по ID.\n\n## Response:\n\n``` json\n{\n    \"data\": {\n        \"type\": \"warehouse\",\n        \"id\": \"1\",\n        \"attributes\": {\n            \"available\": true,\n            \"name\": \"Main Warehouse\"\n        }\n    }\n}\n\n ```"
 			},
 			"response": []
 		},
@@ -410,20 +306,13 @@
 			"name": "create warehouse",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdXVpZCI6ImNjYWNhMDk0LTYwYjctNDQzNy04ZGE5LWRiNzEwOGEyMzI5NCIsImVtYWlsIjoiZ2FhQGxhYmlzLnN1IiwiZXhwIjoxNzE1MjM2OTg0LCJyb2xlX2lkIjoiMiIsInVzZXJfaWQiOiI4MTAzIn0.4NUt9n-Y6PCymSjWP-vHFHAPFgRWdbmv2hkbATzh9UE",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"data\": {\r\n    \"type\": \"warehouse\",\r\n    \"attributes\": {\r\n      \"name\": \"Examdkwsadpвle\",\r\n      \"available\": true\r\n    }\r\n  }\r\n}",
+					"raw": "{\r\n  \"data\": {\r\n    \"type\": \"warehouse\",\r\n    \"attributes\": {\r\n      \"name\": \"Example\",\r\n      \"available\": true\r\n    }\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -442,15 +331,9 @@
 					"path": [
 						"warehouse",
 						"create"
-					],
-					"query": [
-						{
-							"key": null,
-							"value": "8985",
-							"disabled": true
-						}
 					]
-				}
+				},
+				"description": "### Create Warehouse\n\nСоздание склада.\n\n#### Response\n\nThe response of this request is a JSON schema describing the structure of the response data."
 			},
 			"response": []
 		}
