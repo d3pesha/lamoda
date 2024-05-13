@@ -172,7 +172,7 @@ func (r productRepo) GetByID(_ context.Context, id uint32) (*model.Product, erro
 }
 
 // получаем доступные продукты на заданном складе, условия != 0 и склад доступен
-func (r productRepo) GetAvailableQuantity(_ context.Context, warehouseID uint32) ([]*model.ProductWarehouse, error) {
+func (r productRepo) GetAvailableProducts(_ context.Context, warehouseID uint32) ([]*model.ProductWarehouse, error) {
 	var products []ProductWarehouse
 
 	result := r.data.Db.Table("product_warehouses").
@@ -267,6 +267,7 @@ func (r productRepo) ReleaseReserve(_ context.Context, reserve []*model.Reservat
 
 func (r productRepo) GetProductAndWarehouse(_ context.Context, productID []uint32, warehouseID []uint32) ([]*model.ProductWarehouse, error) {
 	var productWarehouse []*ProductWarehouse
+
 	for i, id := range productID {
 		var product ProductWarehouse
 

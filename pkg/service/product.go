@@ -48,7 +48,7 @@ func (uc ProductUseCase) GetByID(ctx context.Context, id uint32) (*model.Product
 }
 
 func (uc ProductUseCase) GetAvailableProducts(ctx context.Context, warehouseID uint32) ([]*model.ProductWarehouse, error) {
-	products, err := uc.repo.GetAvailableQuantity(ctx, warehouseID)
+	products, err := uc.repo.GetAvailableProducts(ctx, warehouseID)
 	if err != nil {
 		return nil, ProductFoundError
 	}
@@ -174,7 +174,7 @@ func (uc ProductUseCase) DeleteReserve(ctx context.Context, id uint32) error {
 	return nil
 }
 
-func (uc ProductUseCase) UpdateProductAndWarehouse(ctx context.Context, warehouse model.ProductWarehouse) error {
+func (uc ProductUseCase) UpdateProductWarehouse(ctx context.Context, warehouse model.ProductWarehouse) error {
 	return uc.repo.UpdateProductWarehouse(ctx, warehouse)
 }
 

@@ -15,7 +15,7 @@ type ProductRepo interface {
 	Create(context.Context, *model.ProductCreateReq) (*model.Product, error)
 	GetAll(context.Context) ([]*model.Product, error)
 	GetByID(context.Context, uint32) (*model.Product, error)
-	GetAvailableQuantity(context.Context, uint32) ([]*model.ProductWarehouse, error)
+	GetAvailableProducts(context.Context, uint32) ([]*model.ProductWarehouse, error)
 
 	Reserve(context.Context, []*model.Reservation) error
 	ReleaseReserve(context.Context, []*model.Reservation) error
