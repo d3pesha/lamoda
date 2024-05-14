@@ -1,11 +1,6 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
-	"github.com/sirupsen/logrus"
-	log "github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
 	"lamoda/configs"
 	"lamoda/pkg/api/product"
 	"lamoda/pkg/api/warehouse"
@@ -13,6 +8,12 @@ import (
 	"lamoda/pkg/repositories"
 	"lamoda/pkg/service"
 	"os"
+
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 func main() {

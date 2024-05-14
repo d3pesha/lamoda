@@ -1,10 +1,11 @@
 package product
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/google/jsonapi"
 	"lamoda/pkg/api/errors"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/google/jsonapi"
 )
 
 func (r ProductRoute) ListProducts(c *gin.Context) {

@@ -2,10 +2,11 @@ package service
 
 import (
 	"context"
-	"github.com/go-kratos/kratos/v2/errors"
-	log "github.com/sirupsen/logrus"
 	"lamoda/pkg/model"
 	"lamoda/pkg/repositories"
+
+	"github.com/go-kratos/kratos/v2/errors"
+	log "github.com/sirupsen/logrus"
 )
 
 type ProductUseCase struct {

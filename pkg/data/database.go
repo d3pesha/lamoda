@@ -2,16 +2,17 @@ package data
 
 import (
 	"fmt"
+	"lamoda/configs"
+	slog "log"
+	"os"
+	"time"
+
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
 	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"lamoda/configs"
-	slog "log"
-	"os"
-	"time"
 )
 
 type Data struct {

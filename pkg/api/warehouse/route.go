@@ -1,8 +1,9 @@
 package warehouse
 
 import (
-	"github.com/gin-gonic/gin"
 	"lamoda/pkg/service"
+
+	"github.com/gin-gonic/gin"
 )
 
 type WarehouseRoute struct {

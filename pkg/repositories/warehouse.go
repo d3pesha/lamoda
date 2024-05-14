@@ -2,9 +2,10 @@ package repositories
 
 import (
 	"context"
-	log "github.com/sirupsen/logrus"
 	"lamoda/pkg/data"
 	"lamoda/pkg/model"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type warehouseRepo struct {

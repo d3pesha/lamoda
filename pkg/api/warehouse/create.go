@@ -1,11 +1,12 @@
 package warehouse
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/google/jsonapi"
 	"lamoda/pkg/api/errors"
 	"lamoda/pkg/model"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/google/jsonapi"
 )
 
 func (r WarehouseRoute) Create(c *gin.Context) {
